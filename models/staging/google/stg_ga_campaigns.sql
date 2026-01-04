@@ -1,0 +1,1 @@
+select * from {{ source("google_ads", "campaign") }}
