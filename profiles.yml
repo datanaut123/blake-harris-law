@@ -1,19 +1,19 @@
-dbt_template:
+blake_harris_law:
   target: dev
   outputs:
     dev:
       type: bigquery
       method: oauth
-      project: GCP_PROJECT_ID
-      dataset: DBT_DATASET_NAME 
+      project: blake-harris-law
+      dataset: dev 
       threads: 4  
       OPTIONAL_CONFIG: VALUE
 
     prod:
       type: bigquery
       method: oauth
-      project: GCP_PROJECT_ID
-      dataset: DBT_DATASET_NAME 
+      project: blake-harris-law
+      dataset: prod 
       threads: 4  
       OPTIONAL_CONFIG: VALUE
 
