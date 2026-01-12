@@ -1,1 +1,30 @@
-select * from {{ source("google_ads", "campaign") }}
+select
+    campaign_id,
+    campaign_name,
+    segments_date as date,
+    metrics_clicks as clicks,
+    campaign_labels as labels,
+    campaign_status as status,
+    campaign_start_date as start_date,
+    metrics_conversions as conversions,
+    safe_divide(metrics_cost_micros, 1000000) as spend,
+    metrics_impressions as impressions,
+    metrics_video_views as video_views,
+    metrics_interactions as interactions,
+    campaign_base_campaign as base_campaign,
+    campaign_resource_name as resource_name,
+    campaign_frequency_caps as frequency_caps,
+    campaign_serving_status,
+    metrics_active_view_cpm,
+    metrics_active_view_ctr,
+    campaign_campaign_budget as budget,
+    campaign_experiment_type,
+    segments_ad_network_type,
+    campaign_bidding_strategy as bidding_strategy,
+    campaign_final_url_suffix,
+    metrics_conversions_value as conversion_value,
+    campaign_optimization_score as optimization_score,
+    campaign_optimization_goal_setting_optimization_goal_types
+    as optimization_goal_types
+
+from {{ source("google_ads", "campaign") }}
