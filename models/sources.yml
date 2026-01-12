@@ -8,6 +8,37 @@ sources:
       - name: account_performance_report # name you want to call it
         identifier: account_performance_report # name for the source table
         description: "Contains data about Google ads source synced from Airbyte."
+
       - name: campaign # name you want to call it
         identifier: campaign # name for the source table
         description: "Contains data about Google ads source synced from Airbyte."
+
+  - name: zoho # Logical name for the source
+    database: 	blake-harris-law  # BigQuery project ID
+    schema: zoho  # BigQuery dataset
+    tables:
+      - name: account # name you want to call it
+        identifier: account # name for the source table
+        description: "Contains data about Google ads source synced from Airbyte."
+        
+      - name: contact # name you want to call it
+        identifier: contact # name for the source table
+        description: "Contains data about Google ads source synced from Airbyte."
+
+      - name: contact_role # name you want to call it
+        identifier: contact_role # name for the source table
+        description: "Contains data about Google ads source synced from Airbyte."
+
+      - name: deal # name you want to call it
+        identifier: deal # name for the source table
+        description: "Contains data about Google ads source synced from Airbyte."
+
+      - name: deal_stage_history # name you want to call it
+        identifier: deal_stage_history # name for the source table
+        description: "Contains data about Google ads source synced from Airbyte."
+
+      - name: stage # name you want to call it
+        identifier: stage # name for the source table
+        description: "Contains data about Google ads source synced from Airbyte."
+
+
