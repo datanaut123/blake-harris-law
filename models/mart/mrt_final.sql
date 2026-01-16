@@ -40,9 +40,14 @@ with
             is_proposal_price_quote,
             is_qualification,
             is_qualified_lead,
-            is_value_proposition
+            is_value_proposition,
+            is_contacted_scheduled,
+            is_junk_leads,
+            is_deal,
+            is_lead,
+            total_leads
 
-        from {{ ref('fct_zh_deals') }}
+        from {{ ref('mrt_leads_deals') }}
     ),
 
     ads as (
@@ -106,7 +111,12 @@ with
             is_proposal_price_quote,
             is_qualification,
             is_qualified_lead,
-            is_value_proposition
+            is_value_proposition,
+            is_contacted_scheduled,
+            is_junk_leads,
+            is_deal,
+            is_lead,
+            total_leads
 
         from deals as de
         full join
