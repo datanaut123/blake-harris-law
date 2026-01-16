@@ -41,4 +41,8 @@ sources:
         identifier: stage # name for the source table
         description: "Contains data about Google ads source synced from Airbyte."
 
+      - name: lead # name you want to call it
+        identifier: lead # name for the source table
+        description: "Contains data about Google ads source synced from Airbyte."
+
 
