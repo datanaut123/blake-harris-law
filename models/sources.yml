@@ -13,6 +13,14 @@ sources:
         identifier: campaign # name for the source table
         description: "Contains data about Google ads source synced from Airbyte."
 
+      - name: conversion_action # name you want to call it
+        identifier: conversion_action # name for the source table
+        description: "Contains data about Google ads source synced from Airbyte."
+
+      - name: conversion_campaign # name you want to call it
+        identifier: conversion_campaign # name for the source table
+        description: "Contains data about Google ads source synced from Airbyte."
+
   - name: zoho # Logical name for the source
     database: 	blake-harris-law  # BigQuery project ID
     schema: zoho  # BigQuery dataset
