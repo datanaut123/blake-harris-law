@@ -145,6 +145,7 @@ select
             or lower(utm_source) = 'youtube'
             or lower(utm_source) = 'www.youtube.com'
             or lower(lead_source) = 'youtube'
+            or gclid_value is not null
         then 'Google'
 
         -- Meta platforms
@@ -158,6 +159,7 @@ select
             or lower(lead_source) = 'instagram'
             or lower(utm_source) like '%instagram%'
             or lower(utm_source) = 'ig'
+            or fbclid is not null
         then 'Meta'
 
         -- TikTok
@@ -203,6 +205,8 @@ select
             case
                 -- Paid indicators from utm_source/lead_source
                 when lower(lead_source) in ('meta', 'google adwords')
+                then 'Paid'
+                when gclid_value is not null or fbclid is not null
                 then 'Paid'
                 when
                     lower(utm_source) in ('meta', 'google')
