@@ -6,7 +6,7 @@ on:
       - main
       
   schedule:
-    - cron: '0 13 * * *'  # Runs at 5:00 AM PST (1:00 PM UTC)
+    - cron: '0 15 * * *'  # Runs at 7:00 AM UTC every day
 
 env:
   DBT_PROFILES_DIR: .
@@ -42,6 +42,7 @@ jobs:
 
     - name: Run dbt commands
       run: |
+        dbt debug --profiles-dir . --project-dir . --target prod
         dbt deps --profiles-dir . --project-dir .
         dbt build --profiles-dir . --project-dir . --target prod
 
