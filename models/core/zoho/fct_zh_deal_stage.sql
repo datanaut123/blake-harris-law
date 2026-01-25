@@ -10,7 +10,7 @@ with
             type as deal_type,
             description as deal_description,
             date(closing_date) as deal_closing_date,
-            date(created_time) as created_date,
+            created_date,
             amount,
             owner_id,
             owner_name,
@@ -38,7 +38,7 @@ with
             first_touch_url,
             first_utm_campaign,
             first_utm_term,
-            first_utm_source as utm_source,
+            utm_source,
             first_utm_medium,
             first_utm_content,
             lead_source,
@@ -60,7 +60,9 @@ with
             ad,
             ad_network,
             ad_campaign_name,
-            keyword
+            keyword,
+            platform,
+            channel
 
         from {{ ref('stg_zh_deals') }}
     ),
@@ -134,222 +136,8 @@ select
     ad_network,
     ad_campaign_name,
     keyword,
-    case
-        -- Google platforms
-        when
-            lower(lead_source) = 'google'
-            or lower(utm_source) like '%google%'
-            or lower(utm_source) like '%www.google.%'
-            or lower(utm_source) = 'google'
-            or lower(lead_source) = 'google adwords'
-            or lower(utm_source) = 'youtube'
-            or lower(utm_source) = 'www.youtube.com'
-            or lower(lead_source) = 'youtube'
-            or gclid_value is not null
-        then 'Google'
+    platform,
+    channel
 
-        -- Meta platforms
-        when
-            lower(lead_source) = 'meta'
-            or lower(utm_source) = 'meta'
-            or lower(lead_source) = 'facebook'
-            or lower(utm_source) like '%facebook%'
-            or lower(utm_source) = 'fb'
-            or lower(utm_source) like 'fb-%'
-            or lower(lead_source) = 'instagram'
-            or lower(utm_source) like '%instagram%'
-            or lower(utm_source) = 'ig'
-            or fbclid is not null
-        then 'Meta'
-
-        -- TikTok
-        when
-            lower(lead_source) = 'tiktok'
-            or lower(utm_source) like '%tiktok%'
-            or lower(utm_source) = 'tiktok'
-        then 'TikTok'
-
-        -- LinkedIn
-        when lower(utm_source) like '%linkedin%' or lower(lead_source) like '%linkedin%'
-        then 'LinkedIn'
-
-        -- Microsoft/Bing
-        when
-            lower(lead_source) = 'bing'
-            or lower(utm_source) like '%bing%'
-            or lower(utm_source) = 'bing'
-            or lower(lead_source) = 'microsoft copilot'
-            or lower(utm_source) like '%microsoft%'
-        then 'Microsoft'
-
-        else 'Others'
-    end as platform,
-
-    -- Channel calculation (Organic or Paid only)
-    case
-        -- Paid channels
-        when lower(lead_channel) in ('paid social', 'paid search')
-        then 'Paid'
-
-        -- Organic channels
-        when lower(lead_channel) in ('organic search', 'organic social')
-        then 'Organic'
-
-        -- Fallback logic when lead_channel is empty or other values
-        when
-            lead_channel is null
-            or trim(lead_channel) = ''
-            or lower(lead_channel)
-            not in ('paid social', 'paid search', 'organic search', 'organic social')
-        then
-            case
-                -- Paid indicators from utm_source/lead_source
-                when lower(lead_source) in ('meta', 'google adwords')
-                then 'Paid'
-                when gclid_value is not null or fbclid is not null
-                then 'Paid'
-                when
-                    lower(utm_source) in ('meta', 'google')
-                    and lower(lead_source) in ('meta', 'google')
-                then 'Paid'
-
-                -- Organic search engines
-                when
-                    lower(lead_source)
-                    in ('google', 'bing', 'yahoo', 'duckduckgo', 'brave')
-                    and lower(utm_source) not in ('meta', 'google')
-                then 'Organic'
-                when
-                    lower(utm_source) like '%google%'
-                    or lower(utm_source) like '%bing%'
-                    or lower(utm_source) like '%yahoo%'
-                then 'Organic'
-
-                -- Social platforms (assume organic when not specified)
-                when
-                    lower(utm_source)
-                    in ('facebook', 'instagram', 'youtube', 'tiktok', 'ig', 'linkedin')
-                    or lower(lead_source)
-                    in ('facebook', 'instagram', 'youtube', 'tiktok', 'linkedin')
-                then 'Organic'
-
-                else 'Others'
-            end
-
-        else 'Others'
-    end as channel
--- case
--- -- Google platforms
--- when
--- lower(lead_source) = 'google'
--- or lower(utm_source) like '%google%'
--- or lower(utm_source) like '%www.google.%'
--- or lower(utm_source) = 'google'
--- or lower(lead_source) = 'google adwords'
--- or lower(utm_source) = 'youtube'
--- or lower(utm_source) = 'www.youtube.com'
--- or lower(lead_source) = 'youtube'
--- then 'Google'
--- -- Meta platforms
--- when
--- lower(lead_source) = 'meta'
--- or lower(utm_source) = 'meta'
--- or lower(lead_source) = 'facebook'
--- or lower(utm_source) like '%facebook%'
--- or lower(utm_source) = 'fb'
--- or lower(utm_source) like 'fb-%'
--- or lower(lead_source) = 'instagram'
--- or lower(utm_source) like '%instagram%'
--- or lower(utm_source) = 'ig'
--- then 'Meta'
--- -- TikTok
--- when
--- lower(lead_source) = 'tiktok'
--- or lower(utm_source) like '%tiktok%'
--- or lower(utm_source) = 'tiktok'
--- then 'TikTok'
--- -- LinkedIn
--- when lower(utm_source) like '%linkedin%'
--- then 'LinkedIn'
--- -- Microsoft/Bing
--- when
--- lower(lead_source) = 'bing'
--- or lower(utm_source) like '%bing%'
--- or lower(utm_source) = 'bing'
--- or lower(lead_source) = 'microsoft copilot'
--- or lower(utm_source) like '%microsoft%'
--- then 'Microsoft'
--- -- Yahoo
--- when lower(lead_source) = 'yahoo' or lower(utm_source) like '%yahoo%'
--- then 'Yahoo'
--- -- Twitter/X
--- when lower(lead_source) = 'twitter' or lower(utm_source) = 't.co'
--- then 'Twitter'
--- else 'Others'
--- end as platform,
--- -- Channel calculation
--- case
--- -- Paid channels
--- when lower(lead_channel) = 'paid social'
--- then 'Paid Social'
--- when lower(lead_channel) = 'paid search'
--- then 'Paid Search'
--- -- Organic channels
--- when lower(lead_channel) = 'organic search'
--- then 'Organic Search'
--- when lower(lead_channel) = 'organic social'
--- then 'Organic Social'
--- -- Direct channels
--- when lower(lead_channel) = 'direct'
--- then 'Direct'
--- when lower(lead_channel) = 'in-person'
--- then 'In-Person'
--- -- Referral/Marketing
--- when lower(lead_channel) = 'referral'
--- then 'Referral'
--- when lower(lead_channel) = 'email marketing'
--- then 'Email Marketing'
--- -- Fallback logic when lead_channel is empty
--- when lead_channel is null or trim(lead_channel) = ''
--- then
--- case
--- -- Paid indicators from utm_source/lead_source
--- when lower(lead_source) in ('meta', 'google adwords')
--- then 'Paid'
--- when
--- lower(utm_source) in ('meta', 'google')
--- and lower(lead_source) in ('meta', 'google')
--- then 'Paid'
--- -- Organic search engines
--- when
--- lower(lead_source)
--- in ('google', 'bing', 'yahoo', 'duckduckgo', 'brave')
--- and lower(utm_source) not in ('meta', 'google')
--- then 'Organic Search'
--- when
--- lower(utm_source) like '%google%'
--- or lower(utm_source) like '%bing%'
--- or lower(utm_source) like '%yahoo%'
--- then 'Organic Search'
--- -- Social platforms (assume organic when not specified)
--- when
--- lower(utm_source)
--- in ('facebook', 'instagram', 'youtube', 'tiktok', 'ig')
--- or lower(lead_source)
--- in ('facebook', 'instagram', 'youtube', 'tiktok')
--- then 'Organic Social'
--- -- Referral sites
--- when
--- lower(utm_source) like '%.com'
--- or lower(utm_source) like '%.org'
--- or lower(utm_source) like '%.ai'
--- then 'Referral'
--- -- Direct
--- when lower(lead_source) = 'direct' or lower(utm_source) = 'direct'
--- then 'Direct'
--- else 'Unknown'
--- end
--- else 'Unknown'
--- end as channel
 from deals as de
 left join stage_history as sg on de.deal_id = sg.deal_id
