@@ -25,6 +25,7 @@ with
                     or lower(first_utm_source) = 'youtube'
                     or lower(first_utm_source) = 'www.youtube.com'
                     or lower(lead_source) = 'youtube'
+                    or coalesce(gclid_value, gclid) is not null
                 then 'Google'
 
                 -- Meta platforms
@@ -38,6 +39,7 @@ with
                     or lower(lead_source) = 'instagram'
                     or lower(first_utm_source) like '%instagram%'
                     or lower(first_utm_source) = 'ig'
+                    or fbclid is not null
                 then 'Meta'
 
                 -- TikTok
@@ -74,6 +76,9 @@ with
                 -- Organic channels
                 when lower(lead_channel) in ('organic search', 'organic social')
                 then 'Organic'
+
+                when gclid_value is not null or fbclid is not null or gclid is not null
+                then 'Paid'
 
                 -- Fallback logic when lead_channel is empty or other values
                 when
