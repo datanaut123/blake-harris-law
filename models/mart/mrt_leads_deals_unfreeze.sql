@@ -22,6 +22,7 @@ select
     is_30_day_waiting_period_2,
     is_48_hour_waiting_period,
     is_60_day_follow_up,
+    is_60_day_waiting_period,
     is_7_day_waiting_period,
     is_agreement_pending,
     is_closed_lost,
@@ -43,7 +44,8 @@ select
     0 as is_junk_leads,
     1 as is_deal,
     0 as is_lead,
-    0 as total_leads
+    0 as total_leads,
+    0 as active_leads
 
 from {{ ref("fct_zh_deals_unfreeze") }}
 
@@ -51,8 +53,8 @@ union all
 
 select
     lead_id as deal_id,
-    created_date,
-    modified_date as stage_change_date,
+    modified_date as created_date,
+    entry_date as stage_change_date,
     lead_status as stage_name,
     first_touch_url,
     utm_campaign,
@@ -73,6 +75,7 @@ select
     0 as is_30_day_waiting_period_2,
     0 as is_48_hour_waiting_period,
     0 as is_60_day_follow_up,
+    0 as is_60_day_waiting_period,
     0 as is_7_day_waiting_period,
     0 as is_agreement_pending,
     0 as is_closed_lost,
@@ -94,6 +97,7 @@ select
     is_junk_leads,
     0 as is_deal,
     1 as is_lead,
-    total_leads
+    total_leads,
+    active_leads
 
 from {{ ref("fct_zh_leads") }}

@@ -24,6 +24,7 @@ with
             is_30_day_waiting_period_2,
             is_48_hour_waiting_period,
             is_60_day_follow_up,
+            is_60_day_waiting_period,
             is_7_day_waiting_period,
             is_agreement_pending,
             is_closed_lost,
@@ -45,7 +46,8 @@ with
             is_junk_leads,
             is_deal,
             is_lead,
-            total_leads
+            total_leads,
+            active_leads
 
         from {{ ref('mrt_leads_deals_unfreeze') }}
     ),
@@ -95,6 +97,7 @@ with
             is_30_day_waiting_period_2,
             is_48_hour_waiting_period,
             is_60_day_follow_up,
+            is_60_day_waiting_period,
             is_7_day_waiting_period,
             is_agreement_pending,
             is_closed_lost,
@@ -116,7 +119,8 @@ with
             is_junk_leads,
             is_deal,
             is_lead,
-            total_leads
+            total_leads,
+            active_leads
 
         from deals as de
         full join

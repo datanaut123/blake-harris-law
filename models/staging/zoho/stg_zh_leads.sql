@@ -1,5 +1,6 @@
 SELECT
     id as lead_id,
+    converted_detail_deal as deal_id,
     owner_id,
     owner_name,
     owner_email,
@@ -83,7 +84,7 @@ SELECT
     custom_last_utm_content AS last_utm_content,
     custom_last_utm_term AS last_utm_term,
     custom_first_utm_source AS first_utm_source,
-    custom_entry_date AS entry_date,
+    CAST(REGEXP_EXTRACT(custom_entry_date, r'^\d{4}-\d{2}-\d{2}') AS DATE) AS entry_date,
     custom_last_utm_source AS last_utm_source,
     custom_referring_url AS referring_url,
     custom_conversion_export_status AS conversion_export_status,

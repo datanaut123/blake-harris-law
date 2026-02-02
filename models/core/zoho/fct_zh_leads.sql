@@ -2,8 +2,10 @@ with
     leads_data as (
         select
             lead_id,
+            deal_id,
             created_date,
             modified_date,
+            entry_date,
             lead_status,
             first_touch_url,
             coalesce(ad_campaign_name, first_utm_campaign) as utm_campaign,
@@ -14,6 +16,8 @@ with
             lead_source,
             coalesce(gclid_value, gclid) as gclid_value,
             fbclid,
+            concat(first_name, ' ',last_name) as full_name,
+            email,
             case
                 -- Google platforms
                 when
@@ -136,6 +140,9 @@ with
 
 select
     lead_id,
+    full_name,
+    email,
+    entry_date,
     created_date,
     modified_date,
     lead_status,
@@ -152,7 +159,8 @@ select
     channel,
     1 as is_contacted_scheduled,
     0 as is_junk_leads,
-    0 as total_leads
+    0 as total_leads,
+    0 as active_leads
 
 from leads_data
 where lead_status = 'Contacted/Scheduled'
@@ -161,6 +169,9 @@ union all
 
 select
     lead_id,
+    full_name,
+    email,
+    entry_date,
     created_date,
     modified_date,
     lead_status,
@@ -177,7 +188,8 @@ select
     channel,
     0 as is_contacted_scheduled,
     1 as is_junk_leads,
-    0 as total_leads
+    0 as total_leads,
+    0 as active_leads
 
 from leads_data
 where lead_status = 'Junk Lead'
@@ -186,6 +198,9 @@ union all
 
 select distinct
     lead_id,
+    full_name,
+    email,
+    entry_date,
     created_date,
     modified_date,
     lead_status,
@@ -202,6 +217,37 @@ select distinct
     channel,
     0 as is_contacted_scheduled,
     0 as is_junk_leads,
-    1 as total_leads
+    1 as total_leads,
+    0 as active_leads,
 
 from leads_data
+
+union all
+
+select distinct
+    lead_id,
+    full_name,
+    email,
+    entry_date,
+    created_date,
+    modified_date,
+    lead_status,
+    first_touch_url,
+    utm_campaign,
+    utm_term,
+    first_utm_source as utm_source,
+    utm_medium,
+    utm_content,
+    lead_source,
+    gclid_value,
+    fbclid,
+    platform,
+    channel,
+    0 as is_contacted_scheduled,
+    0 as is_junk_leads,
+    0 as total_leads,
+    1 as active_leads
+from leads_data
+where deal_id is null
+and lead_status <> 'Junk Lead' 
+and lead_status <> 'Lost Lead'

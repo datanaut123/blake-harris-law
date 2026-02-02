@@ -51,8 +51,8 @@ union all
 
 select
     lead_id as deal_id,
-    created_date,
-    modified_date as stage_change_date,
+    modified_date as created_date,
+    entry_date as stage_change_date,
     lead_status as stage_name,
     first_touch_url,
     utm_campaign,
