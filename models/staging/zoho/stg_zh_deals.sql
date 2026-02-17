@@ -154,7 +154,7 @@ select *,
             or lower(utm_source) = 'bing'
             or lower(lead_source) = 'microsoft copilot'
             or lower(utm_source) like '%microsoft%'
-        then 'Microsoft'
+        then 'Bing'
 
         else 'Others'
     end as platform,

@@ -66,7 +66,7 @@ with
                     or lower(first_utm_source) = 'bing'
                     or lower(lead_source) = 'microsoft copilot'
                     or lower(first_utm_source) like '%microsoft%'
-                then 'Microsoft'
+                then 'Bing'
 
                 else 'Others'
             end as platform,
@@ -163,7 +163,7 @@ select
     0 as active_leads
 
 from leads_data
-where lead_status = 'Contacted/Scheduled'
+where lead_status = 'Contacted/Scheduled' and deal_id is null
 
 union all
 
