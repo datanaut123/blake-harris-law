@@ -15,3 +15,4 @@ select
     CampaignStatus as status
 
 from {{ source("bing_ads", "campaign_performance_report_daily") }}
+where accountid = 187180504
