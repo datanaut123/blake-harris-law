@@ -90,7 +90,7 @@ SELECT
     0 AS is_qualified_lead,
     0 AS is_value_proposition
 FROM {{ ref('stg_zh_deals') }}
-WHERE stage_name = '24-Hour Waiting Period'
+WHERE stage_name = '24-Hour Waiting Period' and probability = '25'
 
 UNION ALL
 
