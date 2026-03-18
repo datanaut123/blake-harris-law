@@ -74,7 +74,7 @@ with deals_data as (select
     custom_last_touch_url as last_touch_url,
     custom_last_utm_content as last_utm_content,
     custom_gclid as gclid,
-    custom_entry_date as entry_date,
+    date(custom_entry_date) as entry_date,
     custom_last_utm_source as last_utm_source,
     custom_referring_url as referring_url,
     custom_contact_email as contact_email,
@@ -171,45 +171,45 @@ select *,
         then 'Organic'
 
         -- Fallback logic when lead_channel is empty or other values
-        when
-            lead_channel is null
-            or trim(lead_channel) = ''
-            or lower(lead_channel)
-            not in ('paid social', 'paid search', 'organic search', 'organic social')
-        then
-            case
-                -- Paid indicators from utm_source/lead_source
-                when lower(lead_source) in ('meta', 'google adwords')
-                then 'Paid'
-                when gclid_value is not null or fbclid is not null
-                then 'Paid'
-                when
-                    lower(utm_source) in ('meta', 'google')
-                    and lower(lead_source) in ('meta', 'google')
-                then 'Paid'
+        -- when
+        --     lead_channel is null
+        --     or trim(lead_channel) = ''
+        --     or lower(lead_channel)
+        --     not in ('paid social', 'paid search', 'organic search', 'organic social')
+        -- then
+        --     case
+        --         -- Paid indicators from utm_source/lead_source
+        --         when lower(lead_source) in ('meta', 'google adwords')
+        --         then 'Paid'
+        --         when gclid_value is not null or fbclid is not null
+        --         then 'Paid'
+        --         when
+        --             lower(utm_source) in ('meta', 'google')
+        --             and lower(lead_source) in ('meta', 'google')
+        --         then 'Paid'
 
-                -- Organic search engines
-                when
-                    lower(lead_source)
-                    in ('google', 'bing', 'yahoo', 'duckduckgo', 'brave')
-                    and lower(utm_source) not in ('meta', 'google')
-                then 'Organic'
-                when
-                    lower(utm_source) like '%google%'
-                    or lower(utm_source) like '%bing%'
-                    or lower(utm_source) like '%yahoo%'
-                then 'Organic'
+        --         -- Organic search engines
+        --         when
+        --             lower(lead_source)
+        --             in ('google', 'bing', 'yahoo', 'duckduckgo', 'brave')
+        --             and lower(utm_source) not in ('meta', 'google')
+        --         then 'Organic'
+        --         when
+        --             lower(utm_source) like '%google%'
+        --             or lower(utm_source) like '%bing%'
+        --             or lower(utm_source) like '%yahoo%'
+        --         then 'Organic'
 
-                -- Social platforms (assume organic when not specified)
-                when
-                    lower(utm_source)
-                    in ('facebook', 'instagram', 'youtube', 'tiktok', 'ig', 'linkedin')
-                    or lower(lead_source)
-                    in ('facebook', 'instagram', 'youtube', 'tiktok', 'linkedin')
-                then 'Organic'
+        --         -- Social platforms (assume organic when not specified)
+        --         when
+        --             lower(utm_source)
+        --             in ('facebook', 'instagram', 'youtube', 'tiktok', 'ig', 'linkedin')
+        --             or lower(lead_source)
+        --             in ('facebook', 'instagram', 'youtube', 'tiktok', 'linkedin')
+        --         then 'Organic'
 
-                else 'Others'
-            end
+        --         else 'Others'
+        --     end
 
         else 'Others'
     end as channel
