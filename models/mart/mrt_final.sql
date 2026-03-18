@@ -127,6 +127,20 @@ with
             and de.platform = ad.platform
     ),
 
+active_deals as (
+    select
+        deal_id,
+        case
+            when max(is_closed_won) = 0
+             and max(is_closed_lost) = 0
+             and max(is_consult_scheduled) = 0
+            then 1
+            else 0
+        end as is_active_deal
+    from data_join
+    group by deal_id
+),
+
     deduplication as (
         select
             *,
@@ -139,12 +153,14 @@ with
     )
 
 select
-    * except (rn, a_campaign_id, a_date, spend, impressions, clicks),
+    dedu.* except (rn, a_campaign_id, a_date, spend, impressions, clicks),
     case when rn = 1 then spend else 0 end as spend,
     case when rn = 1 then impressions else 0 end as impressions,
-    case when rn = 1 then clicks else 0 end as clicks
+    case when rn = 1 then clicks else 0 end as clicks,
+    is_active_deal
 
-from deduplication
+from deduplication as dedu 
+left join active_deals as ad on dedu.deal_id = ad.deal_id
 
 
 

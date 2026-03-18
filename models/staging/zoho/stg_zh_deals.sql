@@ -103,7 +103,8 @@ with deals_data as (select
     custom_click_type as click_type,
     custom_device_type as device_type,
     custom_keyword as keyword,
-    custom_reason_for_conversion_failure as reason_for_conversion_failure
+    custom_reason_for_conversion_failure as reason_for_conversion_failure,
+    custom_pipeline as deal_pipeline
 from {{ source("zoho", "deal") }}
 )
 
