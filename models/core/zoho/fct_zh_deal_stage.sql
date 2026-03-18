@@ -62,7 +62,9 @@ with
             ad_campaign_name,
             keyword,
             platform,
-            channel
+            channel,
+            deal_pipeline
+
 
         from {{ ref('stg_zh_deals') }}
     ),
@@ -137,7 +139,8 @@ select
     ad_campaign_name,
     keyword,
     platform,
-    channel
+    channel,
+    deal_pipeline
 
 from deals as de
 left join stage_history as sg on de.deal_id = sg.deal_id

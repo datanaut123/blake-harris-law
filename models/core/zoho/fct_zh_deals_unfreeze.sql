@@ -1,6 +1,7 @@
 -- 14-Day Waiting Period
 SELECT
     deal_id,
+    deal_pipeline,
     created_date,
     stage_change_date,
     stage_name,
@@ -49,6 +50,7 @@ UNION ALL
 -- 24-Hour Waiting Period
 SELECT
     deal_id,
+    deal_pipeline,
     created_date,
     stage_change_date,
     stage_name,
@@ -97,6 +99,7 @@ UNION ALL
 -- 30-Day Waiting Period 1
 SELECT
     deal_id,
+    deal_pipeline,
     created_date,
     stage_change_date,
     stage_name,
@@ -145,6 +148,7 @@ UNION ALL
 -- 30-Day Waiting Period 2
 SELECT
     deal_id,
+    deal_pipeline,
     created_date,
     stage_change_date,
     stage_name,
@@ -193,6 +197,7 @@ UNION ALL
 -- 48-Hour Waiting Period
 SELECT
     deal_id,
+    deal_pipeline,
     created_date,
     stage_change_date,
     stage_name,
@@ -241,6 +246,7 @@ UNION ALL
 -- 60 Day Follow-Up
 SELECT
     deal_id,
+    deal_pipeline,
     created_date,
     stage_change_date,
     stage_name,
@@ -289,6 +295,7 @@ UNION ALL
 -- 7-Day Waiting Period
 SELECT
     deal_id,
+    deal_pipeline,
     created_date,
     stage_change_date,
     stage_name,
@@ -337,6 +344,7 @@ UNION ALL
 -- Agreement Pending
 SELECT
     deal_id,
+    deal_pipeline,
     created_date,
     stage_change_date,
     stage_name,
@@ -385,6 +393,7 @@ UNION ALL
 -- Closed Lost
 SELECT
     deal_id,
+    deal_pipeline,
     created_date,
     stage_change_date,
     stage_name,
@@ -433,6 +442,7 @@ UNION ALL
 -- Closed Lost to Competition
 SELECT
     deal_id,
+    deal_pipeline,
     created_date,
     stage_change_date,
     stage_name,
@@ -481,6 +491,7 @@ UNION ALL
 -- Closed Won
 SELECT
     deal_id,
+    deal_pipeline,
     created_date,
     stage_change_date,
     stage_name,
@@ -529,6 +540,7 @@ UNION ALL
 -- Consult Scheduled
 SELECT
     deal_id,
+    deal_pipeline,
     created_date,
     stage_change_date,
     stage_name,
@@ -570,13 +582,14 @@ SELECT
     0 AS is_qualified_lead,
     0 AS is_value_proposition
 FROM {{ ref('stg_zh_deals') }}
-WHERE stage_name = 'Consult Scheduled'
+WHERE stage_name = 'Consult Scheduled' and deal_pipeline like '%Blake Harris Law%'
 
 UNION ALL
 
 -- Contacted
 SELECT
     deal_id,
+    deal_pipeline,
     created_date,
     stage_change_date,
     stage_name,
@@ -625,6 +638,7 @@ UNION ALL
 -- Contract Out
 SELECT
     deal_id,
+    deal_pipeline,
     created_date,
     stage_change_date,
     stage_name,
@@ -673,6 +687,7 @@ UNION ALL
 -- Follow-Up Required
 SELECT
     deal_id,
+    deal_pipeline,
     created_date,
     stage_change_date,
     stage_name,
@@ -721,6 +736,7 @@ UNION ALL
 -- Id. Decision Makers
 SELECT
     deal_id,
+    deal_pipeline,
     created_date,
     stage_change_date,
     stage_name,
@@ -769,6 +785,7 @@ UNION ALL
 -- Needs Analysis
 SELECT
     deal_id,
+    deal_pipeline,
     created_date,
     stage_change_date,
     stage_name,
@@ -817,6 +834,7 @@ UNION ALL
 -- Negotiation/Review
 SELECT
     deal_id,
+    deal_pipeline,
     created_date,
     stage_change_date,
     stage_name,
@@ -865,6 +883,7 @@ UNION ALL
 -- New Lead
 SELECT
     deal_id,
+    deal_pipeline,
     created_date,
     stage_change_date,
     stage_name,
@@ -913,6 +932,7 @@ UNION ALL
 -- Proposal/Price Quote
 SELECT
     deal_id,
+    deal_pipeline,
     created_date,
     stage_change_date,
     stage_name,
@@ -961,6 +981,7 @@ UNION ALL
 -- Qualification
 SELECT
     deal_id,
+    deal_pipeline,
     created_date,
     stage_change_date,
     stage_name,
@@ -1009,6 +1030,7 @@ UNION ALL
 -- Qualified Lead
 SELECT
     deal_id,
+    deal_pipeline,
     created_date,
     stage_change_date,
     stage_name,
@@ -1057,6 +1079,7 @@ UNION ALL
 -- Value Proposition
 SELECT
     deal_id,
+    deal_pipeline,
     created_date,
     stage_change_date,
     stage_name,
@@ -1103,6 +1126,7 @@ WHERE stage_name = 'Value Proposition'
 UNION ALL 
 SELECT
     deal_id,
+    deal_pipeline,
     created_date,
     stage_change_date,
     stage_name,

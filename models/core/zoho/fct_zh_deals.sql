@@ -1,6 +1,7 @@
 -- 14-Day Waiting Period
 SELECT
     deal_id,
+    deal_pipeline,
     created_date,
     stage_change_date,
     stage_name,
@@ -40,7 +41,8 @@ SELECT
     0 AS is_proposal_price_quote,
     0 AS is_qualification,
     0 AS is_qualified_lead,
-    0 AS is_value_proposition
+    0 AS is_value_proposition,
+    0 AS is_contacted_scheduled_deals
 FROM {{ ref('fct_zh_deal_stage') }}
 WHERE stage_name = '14-Day Waiting Period'
 
@@ -49,6 +51,7 @@ UNION ALL
 -- 24-Hour Waiting Period
 SELECT
     deal_id,
+    deal_pipeline,
     created_date,
     stage_change_date,
     stage_name,
@@ -88,7 +91,8 @@ SELECT
     0 AS is_proposal_price_quote,
     0 AS is_qualification,
     0 AS is_qualified_lead,
-    0 AS is_value_proposition
+    0 AS is_value_proposition,
+    0 AS is_contacted_scheduled_deals
 FROM {{ ref('fct_zh_deal_stage') }}
 WHERE stage_name = '24-Hour Waiting Period'
 
@@ -97,6 +101,7 @@ UNION ALL
 -- 30-Day Waiting Period 1
 SELECT
     deal_id,
+    deal_pipeline,
     created_date,
     stage_change_date,
     stage_name,
@@ -136,15 +141,17 @@ SELECT
     0 AS is_proposal_price_quote,
     0 AS is_qualification,
     0 AS is_qualified_lead,
-    0 AS is_value_proposition
+    0 AS is_value_proposition,
+    0 AS is_contacted_scheduled_deals
 FROM {{ ref('fct_zh_deal_stage') }}
-WHERE stage_name = '30-Day Waiting Period 1'
+WHERE stage_name = '30-Day Wait,ing Period 1'
 
 UNION ALL
 
 -- 30-Day Waiting Period 2
 SELECT
     deal_id,
+    deal_pipeline,
     created_date,
     stage_change_date,
     stage_name,
@@ -184,7 +191,8 @@ SELECT
     0 AS is_proposal_price_quote,
     0 AS is_qualification,
     0 AS is_qualified_led,
-    0 AS is_value_proposition
+    0 AS is_value_proposition,
+    0 AS is_contacted_scheduled_deals
 FROM {{ ref('fct_zh_deal_stage') }}
 WHERE stage_name = '30-Day Waiting Period 2'
 
@@ -193,6 +201,7 @@ UNION ALL
 -- 48-Hour Waiting Period
 SELECT
     deal_id,
+    deal_pipeline,
     created_date,
     stage_change_date,
     stage_name,
@@ -232,7 +241,8 @@ SELECT
     0 AS is_proposal_price_quote,
     0 AS is_qualification,
     0 AS is_qualified_lead,
-    0 AS is_value_proposition
+    0 AS is_value_proposition,
+    0 AS is_contacted_scheduled_deals
 FROM {{ ref('fct_zh_deal_stage') }}
 WHERE stage_name = '48-Hour Waiting Period'
 
@@ -241,6 +251,7 @@ UNION ALL
 -- 60 Day Follow-Up
 SELECT
     deal_id,
+    deal_pipeline,
     created_date,
     stage_change_date,
     stage_name,
@@ -280,7 +291,8 @@ SELECT
     0 AS is_proposal_price_quote,
     0 AS is_qualification,
     0 AS is_qualified_lead,
-    0 AS is_value_proposition
+    0 AS is_value_proposition,
+    0 AS is_contacted_scheduled_deals
 FROM {{ ref('fct_zh_deal_stage') }}
 WHERE stage_name = '60 Day Follow-Up'
 
@@ -289,6 +301,7 @@ UNION ALL
 -- 7-Day Waiting Period
 SELECT
     deal_id,
+    deal_pipeline,
     created_date,
     stage_change_date,
     stage_name,
@@ -328,7 +341,8 @@ SELECT
     0 AS is_proposal_price_quote,
     0 AS is_qualification,
     0 AS is_qualified_lead,
-    0 AS is_value_proposition
+    0 AS is_value_proposition,
+    0 AS is_contacted_scheduled_deals
 FROM {{ ref('fct_zh_deal_stage') }}
 WHERE stage_name = '7-Day Waiting Period'
 
@@ -337,6 +351,7 @@ UNION ALL
 -- Agreement Pending
 SELECT
     deal_id,
+    deal_pipeline,
     created_date,
     stage_change_date,
     stage_name,
@@ -376,7 +391,8 @@ SELECT
     0 AS is_proposal_price_quote,
     0 AS is_qualification,
     0 AS is_qualified_lead,
-    0 AS is_value_proposition
+    0 AS is_value_proposition,
+    0 AS is_contacted_scheduled_deals
 FROM {{ ref('fct_zh_deal_stage') }}
 WHERE stage_name = 'Agreement Pending'
 
@@ -385,6 +401,7 @@ UNION ALL
 -- Closed Lost
 SELECT
     deal_id,
+    deal_pipeline,
     created_date,
     stage_change_date,
     stage_name,
@@ -424,7 +441,8 @@ SELECT
     0 AS is_proposal_price_quote,
     0 AS is_qualification,
     0 AS is_qualified_lead,
-    0 AS is_value_proposition
+    0 AS is_value_proposition,
+    0 AS is_contacted_scheduled_deals
 FROM {{ ref('fct_zh_deal_stage') }}
 WHERE stage_name = 'Closed Lost'
 
@@ -433,6 +451,7 @@ UNION ALL
 -- Closed Lost to Competition
 SELECT
     deal_id,
+    deal_pipeline,
     created_date,
     stage_change_date,
     stage_name,
@@ -472,7 +491,8 @@ SELECT
     0 AS is_proposal_price_quote,
     0 AS is_qualification,
     0 AS is_qualified_lead,
-    0 AS is_value_proposition
+    0 AS is_value_proposition,
+    0 AS is_contacted_scheduled_deals
 FROM {{ ref('fct_zh_deal_stage') }}
 WHERE stage_name = 'Closed Lost to Competition'
 
@@ -481,6 +501,7 @@ UNION ALL
 -- Closed Won
 SELECT
     deal_id,
+    deal_pipeline,
     created_date,
     stage_change_date,
     stage_name,
@@ -520,7 +541,8 @@ SELECT
     0 AS is_proposal_price_quote,
     0 AS is_qualification,
     0 AS is_qualified_lead,
-    0 AS is_value_proposition
+    0 AS is_value_proposition,
+    0 AS is_contacted_scheduled_deals
 FROM {{ ref('fct_zh_deal_stage') }}
 WHERE stage_name = 'Closed Won'
 
@@ -529,6 +551,7 @@ UNION ALL
 -- Consult Scheduled
 SELECT
     deal_id,
+    deal_pipeline,
     created_date,
     stage_change_date,
     stage_name,
@@ -568,15 +591,17 @@ SELECT
     0 AS is_proposal_price_quote,
     0 AS is_qualification,
     0 AS is_qualified_lead,
-    0 AS is_value_proposition
+    0 AS is_value_proposition,
+    0 AS is_contacted_scheduled_deals
 FROM {{ ref('fct_zh_deal_stage') }}
-WHERE stage_name = 'Consult Scheduled'
+WHERE stage_name = 'Consult Scheduled' and deal_pipeline like '%Blake Harris Law%'
 
 UNION ALL
 
 -- Contacted
 SELECT
     deal_id,
+    deal_pipeline,
     created_date,
     stage_change_date,
     stage_name,
@@ -616,7 +641,8 @@ SELECT
     0 AS is_proposal_price_quote,
     0 AS is_qualification,
     0 AS is_qualified_lead,
-    0 AS is_value_proposition
+    0 AS is_value_proposition,
+    0 AS is_contacted_scheduled_deals
 FROM {{ ref('fct_zh_deal_stage') }}
 WHERE stage_name = 'Contacted'
 
@@ -625,6 +651,7 @@ UNION ALL
 -- Contract Out
 SELECT
     deal_id,
+    deal_pipeline,
     created_date,
     stage_change_date,
     stage_name,
@@ -664,7 +691,8 @@ SELECT
     0 AS is_proposal_price_quote,
     0 AS is_qualification,
     0 AS is_qualified_lead,
-    0 AS is_value_proposition
+    0 AS is_value_proposition,
+    0 AS is_contacted_scheduled_deals
 FROM {{ ref('fct_zh_deal_stage') }}
 WHERE stage_name = 'Contract Out'
 
@@ -673,6 +701,7 @@ UNION ALL
 -- Follow-Up Required
 SELECT
     deal_id,
+    deal_pipeline,
     created_date,
     stage_change_date,
     stage_name,
@@ -712,7 +741,8 @@ SELECT
     0 AS is_proposal_price_quote,
     0 AS is_qualification,
     0 AS is_qualified_lead,
-    0 AS is_value_proposition
+    0 AS is_value_proposition,
+    0 AS is_contacted_scheduled_deals
 FROM {{ ref('fct_zh_deal_stage') }}
 WHERE stage_name = 'Follow-Up Required'
 
@@ -721,6 +751,7 @@ UNION ALL
 -- Id. Decision Makers
 SELECT
     deal_id,
+    deal_pipeline,
     created_date,
     stage_change_date,
     stage_name,
@@ -760,7 +791,8 @@ SELECT
     0 AS is_proposal_price_quote,
     0 AS is_qualification,
     0 AS is_qualified_lead,
-    0 AS is_value_proposition
+    0 AS is_value_proposition,
+    0 AS is_contacted_scheduled_deals
 FROM {{ ref('fct_zh_deal_stage') }}
 WHERE stage_name = 'Id. Decision Makers'
 
@@ -769,6 +801,7 @@ UNION ALL
 -- Needs Analysis
 SELECT
     deal_id,
+    deal_pipeline,
     created_date,
     stage_change_date,
     stage_name,
@@ -808,7 +841,8 @@ SELECT
     0 AS is_proposal_price_quote,
     0 AS is_qualification,
     0 AS is_qualified_lead,
-    0 AS is_value_proposition
+    0 AS is_value_proposition,
+    0 AS is_contacted_scheduled_deals
 FROM {{ ref('fct_zh_deal_stage') }}
 WHERE stage_name = 'Needs Analysis'
 
@@ -817,6 +851,7 @@ UNION ALL
 -- Negotiation/Review
 SELECT
     deal_id,
+    deal_pipeline,
     created_date,
     stage_change_date,
     stage_name,
@@ -856,7 +891,8 @@ SELECT
     0 AS is_proposal_price_quote,
     0 AS is_qualification,
     0 AS is_qualified_lead,
-    0 AS is_value_proposition
+    0 AS is_value_proposition,
+    0 AS is_contacted_scheduled_deals
 FROM {{ ref('fct_zh_deal_stage') }}
 WHERE stage_name = 'Negotiation/Review'
 
@@ -865,6 +901,7 @@ UNION ALL
 -- New Lead
 SELECT
     deal_id,
+    deal_pipeline,
     created_date,
     stage_change_date,
     stage_name,
@@ -904,7 +941,8 @@ SELECT
     0 AS is_proposal_price_quote,
     0 AS is_qualification,
     0 AS is_qualified_lead,
-    0 AS is_value_proposition
+    0 AS is_value_proposition,
+    0 AS is_contacted_scheduled_deals
 FROM {{ ref('fct_zh_deal_stage') }}
 WHERE stage_name = 'New Lead'
 
@@ -913,6 +951,7 @@ UNION ALL
 -- Proposal/Price Quote
 SELECT
     deal_id,
+    deal_pipeline,
     created_date,
     stage_change_date,
     stage_name,
@@ -952,7 +991,8 @@ SELECT
     1 AS is_proposal_price_quote,
     0 AS is_qualification,
     0 AS is_qualified_lead,
-    0 AS is_value_proposition
+    0 AS is_value_proposition,
+    0 AS is_contacted_scheduled_deals
 FROM {{ ref('fct_zh_deal_stage') }}
 WHERE stage_name = 'Proposal/Price Quote'
 
@@ -961,6 +1001,7 @@ UNION ALL
 -- Qualification
 SELECT
     deal_id,
+    deal_pipeline,
     created_date,
     stage_change_date,
     stage_name,
@@ -1000,7 +1041,8 @@ SELECT
     0 AS is_proposal_price_quote,
     1 AS is_qualification,
     0 AS is_qualified_lead,
-    0 AS is_value_proposition
+    0 AS is_value_proposition,
+    0 AS is_contacted_scheduled_deals
 FROM {{ ref('fct_zh_deal_stage') }}
 WHERE stage_name = 'Qualification'
 
@@ -1009,6 +1051,7 @@ UNION ALL
 -- Qualified Lead
 SELECT
     deal_id,
+    deal_pipeline,
     created_date,
     stage_change_date,
     stage_name,
@@ -1048,7 +1091,8 @@ SELECT
     0 AS is_proposal_price_quote,
     0 AS is_qualification,
     1 AS is_qualified_lead,
-    0 AS is_value_proposition
+    0 AS is_value_proposition,
+    0 AS is_contacted_scheduled_deals
 FROM {{ ref('fct_zh_deal_stage') }}
 WHERE stage_name = 'Qualified Lead'
 
@@ -1057,6 +1101,7 @@ UNION ALL
 -- Value Proposition
 SELECT
     deal_id,
+    deal_pipeline,
     created_date,
     stage_change_date,
     stage_name,
@@ -1096,7 +1141,8 @@ SELECT
     0 AS is_proposal_price_quote,
     0 AS is_qualification,
     0 AS is_qualified_lead,
-    1 AS is_value_proposition
+    1 AS is_value_proposition,
+    0 AS is_contacted_scheduled_deals
 FROM {{ ref('fct_zh_deal_stage') }}
 WHERE stage_name = 'Value Proposition'
 
@@ -1104,6 +1150,7 @@ UNION ALL
 
 SELECT
     deal_id,
+    deal_pipeline,
     created_date,
     stage_change_date,
     stage_name,
@@ -1143,6 +1190,56 @@ SELECT
     0 AS is_proposal_price_quote,
     0 AS is_qualification,
     0 AS is_qualified_lead,
-    0 AS is_value_proposition
+    0 AS is_value_proposition,
+    0 AS is_contacted_scheduled_deals
 FROM {{ ref('fct_zh_deal_stage') }}
 WHERE stage_name = '60-Day Waiting Period'
+
+UNION ALL
+
+SELECT
+    deal_id,
+    deal_pipeline,
+    created_date,
+    stage_change_date,
+    stage_name,
+    first_touch_url,
+    COALESCE(ad_campaign_name, first_utm_campaign) AS utm_campaign,
+    COALESCE(keyword, first_utm_term) AS utm_term,
+    utm_source,
+    first_utm_medium AS utm_medium,
+    first_utm_content AS utm_content,
+    lead_source,
+    platform,
+    channel,
+    COALESCE(gclid_value, gclid) AS gclid_value,
+    fbclid,
+    0 AS closed_won_amount,
+    0 AS opportunity_amount,
+    0 AS is_14_day_waiting_period,
+    0 AS is_24_hour_waiting_period,
+    0 AS is_30_day_waiting_period_1,
+    0 AS is_30_day_waiting_period_2,
+    0 AS is_48_hour_waiting_period,
+    0 AS is_60_day_follow_up,
+    0 AS is_60_day_waiting_period,
+    0 AS is_7_day_waiting_period,
+    0 AS is_agreement_pending,
+    0 AS is_closed_lost,
+    0 AS is_closed_lost_to_competition,
+    0 AS is_closed_won,
+    0 AS is_consult_scheduled,
+    0 AS is_contacted,
+    0 AS is_contract_out,
+    0 AS is_follow_up_required,
+    0 AS is_id_decision_makers,
+    0 AS is_needs_analysis,
+    0 AS is_negotiation_review,
+    0 AS is_new_lead,
+    0 AS is_proposal_price_quote,
+    0 AS is_qualification,
+    0 AS is_qualified_lead,
+    0 AS is_value_proposition,
+    1 AS is_contacted_scheduled_deals
+FROM {{ ref('fct_zh_deal_stage') }}
+WHERE stage_name = 'Contacted/Scheduled'
