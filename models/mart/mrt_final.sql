@@ -4,6 +4,7 @@ with
             deal_id,
             created_date,
             stage_change_date,
+            entry_date,
             stage_name,
             first_touch_url,
             utm_campaign,
@@ -69,7 +70,8 @@ with
         select
             deal_id,
             created_date,
-            coalesce(stage_change_date, date) as date,
+            -- coalesce(stage_change_date, date) as date,
+            coalesce(entry_date, date) as date,
             stage_name,
             first_touch_url,
             coalesce(de.utm_campaign, ad.campaign_name) as utm_campaign,
@@ -121,7 +123,8 @@ with
         from deals as de
         full join
             ads as ad
-            on de.stage_change_date = ad.date
+            on de.entry_date = ad.date
+            -- on de.stage_change_date = ad.date
             and de.utm_campaign = ad.campaign_name
             and de.channel = ad.channel
             and de.platform = ad.platform
@@ -138,6 +141,7 @@ active_deals as (
             else 0
         end as is_active_deal
     from data_join
+    where is_deal = 1
     group by deal_id
 ),
 
