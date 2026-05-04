@@ -61,4 +61,16 @@ sources:
         identifier: campaign_performance_report_daily # name for the source table
         description: "Contains data about Bing ads source synced from Airbyte."
 
+  - name: meta_ads  # Logical name for the source
+    database: blake-harris-law  # BigQuery project ID
+    schema: meta_ads  # BigQuery dataset
+    tables:
+      - name: ads_insights # name you want to call it
+        identifier: ads_insights # name for the source table
+        description: "Contains data about Bing ads source synced from Airbyte."
+
+      - name: campaigns # name you want to call it
+        identifier: campaigns # name for the source table
+        description: "Contains data about Bing ads source synced from Airbyte."
+
 
