@@ -6,7 +6,7 @@ on:
       - main
       
   schedule:
-    - cron: '0 15 * * *'  # Runs at 7:00 AM UTC every day
+    - cron: '0 9 * * *'  # Runs at 7:00 AM UTC every day
 
 env:
   DBT_PROFILES_DIR: .
