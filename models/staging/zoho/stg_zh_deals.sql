@@ -203,6 +203,21 @@ select
             or lower(utm_source) like '%microsoft%'
         then 'Bing'
 
+        -- Find Your Fit landing pages only receive paid traffic: attribute by the
+        -- utm_source on the touch URL, defaulting to Google when none is present
+        when
+            regexp_contains(lower(concat(coalesce(first_touch_url, ''), ' ', coalesce(last_touch_url, ''))), r'find-your-fit|asset-protection-fit')
+            and regexp_contains(lower(concat(coalesce(first_touch_url, ''), ' ', coalesce(last_touch_url, ''))), r'utm_source=(fb|ig|facebook|instagram|meta)')
+        then 'Meta'
+
+        when
+            regexp_contains(lower(concat(coalesce(first_touch_url, ''), ' ', coalesce(last_touch_url, ''))), r'find-your-fit|asset-protection-fit')
+            and regexp_contains(lower(concat(coalesce(first_touch_url, ''), ' ', coalesce(last_touch_url, ''))), r'utm_source=(bing|microsoft)')
+        then 'Bing'
+
+        when regexp_contains(lower(concat(coalesce(first_touch_url, ''), ' ', coalesce(last_touch_url, ''))), r'find-your-fit|asset-protection-fit')
+        then 'Google'
+
         else 'Others'
     end as platform,
 
@@ -210,6 +225,10 @@ select
     case
         -- Paid channels
         when lower(lead_channel) in ('paid social', 'paid search')
+        then 'Paid'
+
+        -- Find Your Fit landing pages are paid-only
+        when regexp_contains(lower(concat(coalesce(first_touch_url, ''), ' ', coalesce(last_touch_url, ''))), r'find-your-fit|asset-protection-fit')
         then 'Paid'
 
         -- Organic channels
